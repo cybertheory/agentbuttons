@@ -131,39 +131,34 @@ export const PreferredButton: FC<PreferredButtonProps> = ({
     ...(popupDescription !== undefined ? { popupDescription } : {}),
   };
 
+  const withSkill = {
+    ...common,
+    ...(skillUrl !== undefined ? { skillUrl } : {}),
+  };
+
   if (!picked) return null;
 
   switch (picked) {
     case 'claude-code':
-      return (
-        <ClaudeCodeButton {...common} promptFlag={promptFlag} />
-      );
+      return <ClaudeCodeButton {...common} promptFlag={promptFlag} />;
     case 'cowork':
-      return (
-        <CoworkButton
-          {...common}
-          skillUrl={skillUrl}
-          autoLaunch={autoLaunch}
-        />
-      );
+      return <CoworkButton {...withSkill} autoLaunch={autoLaunch} />;
     case 'hermes':
       return <HermesButton {...common} />;
     case 'hermes-skill':
-      return (
-        <HermesSkillButton {...common} skillUrl={skillUrl} />
-      );
+      return <HermesSkillButton {...withSkill} />;
     case 'openclaw':
-      return <OpenClawButton {...common} />;
+      return <OpenClawButton {...withSkill} />;
     case 'ironclaw':
-      return <IronClawButton {...common} />;
+      return <IronClawButton {...withSkill} />;
     case 'nanoclaw':
-      return <NanoClawButton {...common} />;
+      return <NanoClawButton {...withSkill} />;
     case 'zeroclaw':
-      return <ZeroClawButton {...common} />;
+      return <ZeroClawButton {...withSkill} />;
     case 'openharness':
-      return <OpenHarnessButton {...common} />;
+      return <OpenHarnessButton {...withSkill} />;
     case 'claudeclaw':
-      return <ClaudeClawButton {...common} />;
+      return <ClaudeClawButton {...withSkill} />;
     default:
       return null;
   }

@@ -695,6 +695,88 @@
       gap: 0.75rem;
       align-items: center;
     }
+
+    .family-demos {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 0.65rem 0.9rem;
+      margin-top: 1.75rem;
+      max-width: 36rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .family-demos-label {
+      width: 100%;
+      text-align: center;
+      font-size: 0.625rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .family-demos-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+    .family-demo-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.5rem 0.85rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      text-decoration: none;
+      color: var(--text);
+      border: 1px solid var(--card-border);
+      background: rgba(17, 26, 40, 0.85);
+      transition: transform 0.15s ease, border-color 0.15s, box-shadow 0.2s ease;
+    }
+    .family-demo-chip:hover {
+      transform: translateY(-1px);
+      border-color: rgba(43, 140, 255, 0.4);
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
+    }
+    .family-demo-chip .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .family-demo-chip--claude {
+      border-color: rgba(212, 121, 92, 0.4);
+    }
+    .family-demo-chip--claude .dot {
+      background: var(--tag-claude);
+    }
+    .family-demo-chip--agent {
+      border-color: rgba(43, 140, 255, 0.45);
+      box-shadow: 0 0 0 1px rgba(43, 140, 255, 0.08);
+    }
+    .family-demo-chip--agent .dot {
+      background: var(--primary);
+      box-shadow: 0 0 10px var(--primary-glow);
+    }
+    .family-demo-chip--agent[aria-current='page'] {
+      background: rgba(43, 140, 255, 0.12);
+    }
+    .family-demo-chip--claw {
+      border-color: rgba(239, 68, 68, 0.4);
+    }
+    .family-demo-chip--claw .dot {
+      background: var(--tag-claw);
+    }
+    .family-demo-chip--hermes {
+      border-color: rgba(124, 184, 255, 0.4);
+    }
+    .family-demo-chip--hermes .dot {
+      background: var(--tag-hermes);
+    }
   </style>
 </head>
 <body>
@@ -724,6 +806,15 @@
         branded themes, filled / outline / ghost variants, optional skill URLs, and copy-friendly dialogs. Use plain HTML
         or wire up React and Vue; one install covers every agent.
       </p>
+      <nav class="family-demos" aria-label="Related live demos">
+        <span class="family-demos-label">More button libraries</span>
+        <div class="family-demos-links">
+          <a class="family-demo-chip family-demo-chip--claude" href="https://claudebuttons.vercel.app/" target="_blank" rel="noopener noreferrer"><span class="dot" aria-hidden="true"></span>claudebuttons</a>
+          <a class="family-demo-chip family-demo-chip--agent" href="https://agentbuttons.vercel.app/" aria-current="page"><span class="dot" aria-hidden="true"></span>agentbuttons</a>
+          <a class="family-demo-chip family-demo-chip--claw" href="https://clawbuttons.vercel.app/" target="_blank" rel="noopener noreferrer"><span class="dot" aria-hidden="true"></span>clawbuttons</a>
+          <a class="family-demo-chip family-demo-chip--hermes" href="https://hermesbuttons.vercel.app/" target="_blank" rel="noopener noreferrer"><span class="dot" aria-hidden="true"></span>hermesbuttons</a>
+        </div>
+      </nav>
       <div class="pill">v1.0.2</div>
       <div class="install-row">
         <span class="install-cmd">npm i agentbuttons</span>

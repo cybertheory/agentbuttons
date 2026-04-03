@@ -120,9 +120,36 @@
 
     .hero-sub {
       margin: 1rem auto 0;
-      max-width: 32rem;
-      font-size: 1.125rem;
+      max-width: 36rem;
+      font-size: 1.2rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: #f1f5f9;
+    }
+
+    .hero-desc {
+      margin: 0.85rem auto 0;
+      max-width: 38rem;
+      font-size: 0.9375rem;
+      line-height: 1.65;
       color: var(--muted);
+      text-align: left;
+    }
+
+    .hero-desc a {
+      color: #7cb8ff;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(43, 140, 255, 0.35);
+    }
+
+    .hero-desc a:hover {
+      color: #b8d9ff;
+      border-bottom-color: rgba(43, 140, 255, 0.55);
+    }
+
+    .hero-desc strong {
+      color: #e2e8f0;
+      font-weight: 600;
     }
 
     .pill {
@@ -170,6 +197,46 @@
     .npm-notice strong {
       color: #e0f0ff;
       font-weight: 600;
+    }
+
+    .hero-notice {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      max-width: 560px;
+      margin: 1.5rem auto 0;
+      padding: 14px 18px;
+      background: rgba(43, 140, 255, 0.07);
+      border: 1px solid rgba(43, 140, 255, 0.2);
+      border-radius: 12px;
+      text-align: left;
+      font-size: 0.8125rem;
+      line-height: 1.55;
+      color: var(--muted);
+    }
+
+    .hero-notice-icon {
+      flex-shrink: 0;
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
+      color: var(--primary);
+      opacity: 0.9;
+    }
+
+    .hero-notice strong {
+      color: #f1f5f9;
+      font-weight: 600;
+    }
+
+    .hero-notice code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      padding: 1px 6px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 4px;
+      color: #7cb8ff;
     }
 
     .install-cmd {
@@ -636,9 +703,34 @@
     <header class="hero" id="hero">
       <h1 class="hero-title">agentbuttons</h1>
       <p class="hero-sub">One package. Every AI coding agent.</p>
+      <p class="hero-desc">
+        Drop-in &ldquo;Run on &hellip;&rdquo; buttons for <strong>Claude Code</strong>, <strong>Cowork</strong>,
+        <strong>Hermes Agent</strong>, and the <strong>OpenClaw-style harness</strong> family (OpenClaw, IronClaw,
+        NanoClaw, and more) &mdash; the same Web Component model as
+        <a href="https://www.npmjs.com/package/claudebuttons" target="_blank" rel="noopener noreferrer">claudebuttons</a>
+        and
+        <a href="https://www.npmjs.com/package/hermesbuttons" target="_blank" rel="noopener noreferrer">hermesbuttons</a>:
+        branded themes, filled / outline / ghost variants, optional skill URLs, and copy-friendly dialogs. Use plain HTML
+        or wire up React and Vue; one install covers every agent.
+      </p>
       <div class="pill">v1.0.2</div>
       <div class="install-row">
         <span class="install-cmd">npm i agentbuttons</span>
+      </div>
+      <div class="hero-notice" role="note">
+        <svg class="hero-notice-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="10" />
+          <path d="M12 16v-4" />
+          <path d="M12 8h.01" />
+        </svg>
+        <span>
+          <strong>Agent &amp; crawler friendly.</strong>
+          Every button embeds a hidden, crawlable <code>&lt;a&gt;</code> in the light DOM &mdash; commands and skill URLs
+          are directly discoverable by scrapers, search engines, and AI agents. Call
+          <code>injectAllStructuredData()</code> from <code>agentbuttons</code> to emit Schema.org JSON&#8209;LD for all
+          button types on the page (or use each package&rsquo;s <code>injectStructuredData()</code> if you import them
+          separately).
+        </span>
       </div>
       <p class="npm-notice">
         Buttons below use the published packages from npm (via unpkg). Hermes styling matches

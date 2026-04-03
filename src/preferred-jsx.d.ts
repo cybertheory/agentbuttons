@@ -3,7 +3,6 @@ import 'react';
 interface PreferredButtonAttributes {
   agents?: string;
   command?: string;
-  'skill-url'?: string;
   theme?: string;
   size?: string;
   variant?: string;

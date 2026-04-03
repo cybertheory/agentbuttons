@@ -15,7 +15,6 @@ export class PreferredButton extends HTMLElement {
   static observedAttributes = [
     'agents',
     'command',
-    'skill-url',
     'theme',
     'variant',
     'size',
@@ -82,7 +81,6 @@ export interface PreferredButtonOptions {
   /** Comma-separated agent ids, developer priority order (e.g. claude-code,hermes,openclaw). */
   agents: string;
   command: string;
-  skillUrl?: string;
   theme?: string;
   variant?: string;
   size?: string;
@@ -98,7 +96,6 @@ export function createPreferredButton(options: PreferredButtonOptions): Preferre
   const el = document.createElement('preferred-button') as PreferredButton;
   el.setAttribute('agents', options.agents);
   el.setAttribute('command', options.command);
-  if (options.skillUrl) el.setAttribute('skill-url', options.skillUrl);
   if (options.theme) el.setAttribute('theme', options.theme);
   if (options.variant) el.setAttribute('variant', options.variant);
   if (options.size) el.setAttribute('size', options.size);

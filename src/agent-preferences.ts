@@ -123,7 +123,6 @@ export function agentIdToCustomElementTag(agentId: string): string | null {
 
 const FORWARD_ATTR_NAMES = [
   'command',
-  'skill-url',
   'theme',
   'variant',
   'size',

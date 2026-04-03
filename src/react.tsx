@@ -71,7 +71,6 @@ export interface PreferredButtonProps {
   /** Comma-separated agent ids in developer priority order. */
   agents: string;
   command: string;
-  skillUrl?: string;
   theme?: 'branded' | 'branded-alt' | 'dark' | 'light' | 'system';
   size?: 'sm' | 'md' | 'lg';
   variant?: 'filled' | 'outline' | 'ghost';
@@ -92,7 +91,6 @@ export interface PreferredButtonProps {
 export const PreferredButton: FC<PreferredButtonProps> = ({
   agents,
   command,
-  skillUrl,
   theme = 'branded',
   size = 'md',
   variant = 'filled',
@@ -131,34 +129,29 @@ export const PreferredButton: FC<PreferredButtonProps> = ({
     ...(popupDescription !== undefined ? { popupDescription } : {}),
   };
 
-  const withSkill = {
-    ...common,
-    ...(skillUrl !== undefined ? { skillUrl } : {}),
-  };
-
   if (!picked) return null;
 
   switch (picked) {
     case 'claude-code':
       return <ClaudeCodeButton {...common} promptFlag={promptFlag} />;
     case 'cowork':
-      return <CoworkButton {...withSkill} autoLaunch={autoLaunch} />;
+      return <CoworkButton {...common} autoLaunch={autoLaunch} />;
     case 'hermes':
       return <HermesButton {...common} />;
     case 'hermes-skill':
-      return <HermesSkillButton {...withSkill} />;
+      return <HermesSkillButton {...common} />;
     case 'openclaw':
-      return <OpenClawButton {...withSkill} />;
+      return <OpenClawButton {...common} />;
     case 'ironclaw':
-      return <IronClawButton {...withSkill} />;
+      return <IronClawButton {...common} />;
     case 'nanoclaw':
-      return <NanoClawButton {...withSkill} />;
+      return <NanoClawButton {...common} />;
     case 'zeroclaw':
-      return <ZeroClawButton {...withSkill} />;
+      return <ZeroClawButton {...common} />;
     case 'openharness':
-      return <OpenHarnessButton {...withSkill} />;
+      return <OpenHarnessButton {...common} />;
     case 'claudeclaw':
-      return <ClaudeClawButton {...withSkill} />;
+      return <ClaudeClawButton {...common} />;
     default:
       return null;
   }

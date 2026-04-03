@@ -244,22 +244,11 @@
     }
 
     .hero-harness-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 0.65rem;
-      justify-items: start;
-    }
-
-    @media (min-width: 520px) {
-      .hero-harness-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-    }
-
-    @media (min-width: 800px) {
-      .hero-harness-grid {
-        grid-template-columns: repeat(6, minmax(0, 1fr));
-      }
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem 1.35rem;
+      align-items: center;
+      justify-content: flex-start;
     }
 
     /* Sections */
@@ -367,7 +356,7 @@
       background: var(--card);
       border: 1px solid var(--card-border);
       border-radius: 16px;
-      padding: 1.35rem 1.5rem;
+      padding: 1.5rem 1.65rem;
       transition:
         border-color 0.2s ease,
         background 0.2s ease,
@@ -394,17 +383,17 @@
     .btn-grid {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.75rem 1rem;
+      gap: 0.85rem 1.15rem;
       align-items: center;
     }
 
     .btn-grid.dense {
-      gap: 0.65rem;
+      gap: 0.85rem 1rem;
     }
 
     .matrix {
       display: grid;
-      gap: 1.25rem;
+      gap: 2rem 1.75rem;
     }
 
     @media (min-width: 720px) {
@@ -414,10 +403,37 @@
     }
 
     .matrix-label {
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: var(--muted);
-      margin-bottom: 0.5rem;
+      font-size: 0.8125rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #cbd5e1;
+      margin-bottom: 0.9rem;
+    }
+
+    /* Branded + dark sit on page; light theme needs a real light surface */
+    .variant-triple {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.85rem 1.1rem;
+      align-items: center;
+    }
+
+    @media (min-width: 640px) {
+      .variant-triple {
+        flex-wrap: nowrap;
+      }
+    }
+
+    .matrix-light-slot {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.5rem 0.65rem;
+      border-radius: 10px;
+      background: linear-gradient(165deg, #f4f4f5 0%, #e4e4e7 100%);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65);
     }
 
     .mix-grid {
@@ -620,7 +636,7 @@
     <header class="hero" id="hero">
       <h1 class="hero-title">agentbuttons</h1>
       <p class="hero-sub">One package. Every AI coding agent.</p>
-      <div class="pill">v1.0.1</div>
+      <div class="pill">v1.0.2</div>
       <div class="install-row">
         <span class="install-cmd">npm i agentbuttons</span>
       </div>
@@ -701,26 +717,32 @@
         <div class="matrix cols-3">
           <div>
             <div class="matrix-label">Filled</div>
-            <div class="btn-row">
+            <div class="variant-triple">
               <claude-code-button command="Refactor the auth module to use JWT tokens" theme="branded" variant="filled" size="sm"></claude-code-button>
               <claude-code-button command="Refactor the auth module to use JWT tokens" theme="dark" variant="filled" size="sm"></claude-code-button>
-              <claude-code-button command="Refactor the auth module to use JWT tokens" theme="light" variant="filled" size="sm"></claude-code-button>
+              <span class="matrix-light-slot" title="Light theme on a light surface">
+                <claude-code-button command="Refactor the auth module to use JWT tokens" theme="light" variant="filled" size="sm"></claude-code-button>
+              </span>
             </div>
           </div>
           <div>
             <div class="matrix-label">Outline</div>
-            <div class="btn-row">
+            <div class="variant-triple">
               <claude-code-button command="Add comprehensive test coverage for the API layer" theme="branded" variant="outline" size="sm"></claude-code-button>
               <claude-code-button command="Add comprehensive test coverage for the API layer" theme="dark" variant="outline" size="sm"></claude-code-button>
-              <claude-code-button command="Add comprehensive test coverage for the API layer" theme="light" variant="outline" size="sm"></claude-code-button>
+              <span class="matrix-light-slot" title="Light theme on a light surface">
+                <claude-code-button command="Add comprehensive test coverage for the API layer" theme="light" variant="outline" size="sm"></claude-code-button>
+              </span>
             </div>
           </div>
           <div>
             <div class="matrix-label">Ghost</div>
-            <div class="btn-row">
+            <div class="variant-triple">
               <claude-code-button command="Refactor the auth module to use JWT tokens" theme="branded" variant="ghost" size="sm"></claude-code-button>
               <claude-code-button command="Refactor the auth module to use JWT tokens" theme="dark" variant="ghost" size="sm"></claude-code-button>
-              <claude-code-button command="Refactor the auth module to use JWT tokens" theme="light" variant="ghost" size="sm"></claude-code-button>
+              <span class="matrix-light-slot" title="Light theme on a light surface">
+                <claude-code-button command="Refactor the auth module to use JWT tokens" theme="light" variant="ghost" size="sm"></claude-code-button>
+              </span>
             </div>
           </div>
         </div>
@@ -743,13 +765,15 @@
             variant="outline"
             size="md"
           ></cowork-button>
-          <cowork-button
-            command="/refactor the auth module to use JWT tokens"
-            skill-url="https://github.com/anthropics/skills/archive/refs/heads/main.zip"
-            theme="light"
-            variant="ghost"
-            size="md"
-          ></cowork-button>
+          <span class="matrix-light-slot">
+            <cowork-button
+              command="/refactor the auth module to use JWT tokens"
+              skill-url="https://github.com/anthropics/skills/archive/refs/heads/main.zip"
+              theme="light"
+              variant="ghost"
+              size="md"
+            ></cowork-button>
+          </span>
         </div>
       </div>
     </section>
@@ -767,26 +791,32 @@
         <div class="matrix cols-3">
           <div>
             <div class="matrix-label">Filled</div>
-            <div class="btn-row">
+            <div class="variant-triple">
               <hermes-button command="/research deep-dive on React Server Components" theme="branded" variant="filled" size="sm"></hermes-button>
               <hermes-button command="/research deep-dive on React Server Components" theme="dark" variant="filled" size="sm"></hermes-button>
-              <hermes-button command="/research deep-dive on React Server Components" theme="light" variant="filled" size="sm"></hermes-button>
+              <span class="matrix-light-slot" title="Light theme on a light surface">
+                <hermes-button command="/research deep-dive on React Server Components" theme="light" variant="filled" size="sm"></hermes-button>
+              </span>
             </div>
           </div>
           <div>
             <div class="matrix-label">Outline</div>
-            <div class="btn-row">
+            <div class="variant-triple">
               <hermes-button command="/competitive-analysis SaaS pricing" theme="branded" variant="outline" size="sm"></hermes-button>
               <hermes-button command="/competitive-analysis SaaS pricing" theme="dark" variant="outline" size="sm"></hermes-button>
-              <hermes-button command="/competitive-analysis SaaS pricing" theme="light" variant="outline" size="sm"></hermes-button>
+              <span class="matrix-light-slot" title="Light theme on a light surface">
+                <hermes-button command="/competitive-analysis SaaS pricing" theme="light" variant="outline" size="sm"></hermes-button>
+              </span>
             </div>
           </div>
           <div>
             <div class="matrix-label">Ghost</div>
-            <div class="btn-row">
+            <div class="variant-triple">
               <hermes-button command="/research deep-dive on React Server Components" theme="branded" variant="ghost" size="sm"></hermes-button>
               <hermes-button command="/research deep-dive on React Server Components" theme="dark" variant="ghost" size="sm"></hermes-button>
-              <hermes-button command="/research deep-dive on React Server Components" theme="light" variant="ghost" size="sm"></hermes-button>
+              <span class="matrix-light-slot" title="Light theme on a light surface">
+                <hermes-button command="/research deep-dive on React Server Components" theme="light" variant="ghost" size="sm"></hermes-button>
+              </span>
             </div>
           </div>
         </div>
@@ -1096,7 +1126,7 @@ app.use(AgentButtonsPlugin);
   </div>
 
   <!-- Pin versions = predictable Hermes palette. Hermes BEFORE claw: shared <hermes-button> tag. -->
-  <script src="https://unpkg.com/claudebuttons@1.2.3/dist/index.global.js"></script>
+  <script src="https://unpkg.com/claudebuttons@1.2.4/dist/index.global.js"></script>
   <script src="https://unpkg.com/hermesbuttons@1.1.1/dist/index.global.js"></script>
   <script src="https://unpkg.com/clawbuttons@1.0.2/dist/index.global.js"></script>
 

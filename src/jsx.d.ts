@@ -11,5 +11,6 @@
 /// <reference types="claudebuttons" />
 /// <reference types="hermesbuttons" />
 /// <reference types="clawbuttons" />
+/// <reference path="./preferred-jsx.d.ts" />
 
 export {};

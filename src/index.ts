@@ -112,10 +112,34 @@ export type {
   ButtonMetadata as ClawButtonMetadata,
 } from 'clawbuttons';
 
+// ── Shared agent preference cookie + preferred-button ───────────────
+export {
+  AGENT_PREFERENCES_COOKIE_NAME,
+  MAX_AGENT_PREFERENCE_ENTRIES,
+  SUPPORTED_PREFERRED_AGENT_IDS,
+  type PreferredAgentId,
+  type AgentPreferencesPayload,
+  readAgentPreferences,
+  writeAgentPreferences,
+  recordAgentPreference,
+  parsePreferredAgentsAttribute,
+  pickPreferredAgentId,
+  agentIdToCustomElementTag,
+  forwardAgentButtonAttributes,
+} from './agent-preferences';
+
+export {
+  PreferredButton,
+  createPreferredButton,
+  registerPreferredButton,
+  type PreferredButtonOptions,
+} from './preferred-button';
+
 // ── Unified registration ────────────────────────────────────────────
 import { register as _registerClaude } from 'claudebuttons';
 import { register as _registerHermes } from 'hermesbuttons';
 import { register as _registerClaw } from 'clawbuttons';
+import { registerPreferredButton } from './preferred-button';
 
 /**
  * Register all agent button custom elements at once.
@@ -126,6 +150,7 @@ export function register() {
   _registerClaude();
   _registerHermes();
   _registerClaw();
+  registerPreferredButton();
 }
 
 /**

@@ -787,6 +787,7 @@
         <a href="#claude">Claude</a>
         <a href="#hermes">Hermes</a>
         <a href="#claw">Harnesses</a>
+        <a href="#preferred">Preferred</a>
         <a href="#playground">Playground</a>
         <a href="#developers">Developers</a>
         <a href="#code">Code</a>
@@ -815,7 +816,7 @@
           <a class="family-demo-chip family-demo-chip--hermes" href="https://hermesbuttons.vercel.app/" target="_blank" rel="noopener noreferrer"><span class="dot" aria-hidden="true"></span>hermesbuttons</a>
         </div>
       </nav>
-      <div class="pill">v1.0.2</div>
+      <div class="pill">v1.1.0</div>
       <div class="install-row">
         <span class="install-cmd">npm i agentbuttons</span>
       </div>
@@ -1061,6 +1062,48 @@
           <zeroclaw-button command="Profile Rust agent memory vs OpenClaw baseline" theme="branded" variant="filled" size="md"></zeroclaw-button>
           <openharness-button command="Spawn Python subagents with streaming tool calls" theme="branded" variant="ghost" size="sm"></openharness-button>
           <claudeclaw-button command="Enable daemon mode with Telegram notifications" theme="branded" variant="outline" size="lg"></claudeclaw-button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Preferred agent (agentpreferences cookie) -->
+    <section id="preferred" aria-labelledby="preferred-heading">
+      <div class="section-head">
+        <span class="section-tag hermes">Shared cookie</span>
+        <h2 id="preferred-heading">Preferred button</h2>
+        <p class="section-desc">
+          <strong>claudebuttons</strong>, <strong>hermesbuttons</strong>, and <strong>clawbuttons</strong> set the
+          <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em;color:#a5b4fc">agentpreferences</code>
+          cookie when someone copies a command (same site). Load the <strong>agentbuttons</strong> bundle below to register
+          <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em;color:#a5b4fc">&lt;preferred-button&gt;</code>
+          — it picks one agent from your <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em;color:#a5b4fc">agents</code>
+          list using that cookie, or falls back to your order if the cookie is absent. Reload the page after changing the cookie to re-run the demo.
+        </p>
+      </div>
+      <div class="card">
+        <p class="card-title">Simulate cookie (then reload)</p>
+        <p class="section-lead" style="margin-bottom: 1rem">
+          Developer default order here is Claude Code → Hermes → OpenClaw. Try each chip, reload, and watch which label
+          <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em;color:#a5b4fc">data-resolved-agent</code> shows.
+        </p>
+        <div class="btn-row" id="pref-cookie-sim" style="flex-wrap: wrap; gap: 0.5rem">
+          <button type="button" class="tab-btn" data-pref="claude-code">Cookie: Claude Code</button>
+          <button type="button" class="tab-btn" data-pref="hermes">Cookie: Hermes</button>
+          <button type="button" class="tab-btn" data-pref="openclaw">Cookie: OpenClaw</button>
+          <button type="button" class="tab-btn" data-pref="clear">Clear cookie</button>
+        </div>
+        <p class="card-title" style="margin-top: 1.5rem">Live <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em;color:#a5b4fc">&lt;preferred-button&gt;</code></p>
+        <div class="btn-row" style="align-items: center; gap: 1rem; flex-wrap: wrap">
+          <preferred-button
+            id="preferred-demo"
+            agents="claude-code,hermes,openclaw"
+            command="/optimize the agentbuttons examples page for Core Web Vitals"
+            skill-url="https://github.com/example/skill/archive/refs/heads/main.zip"
+            theme="branded"
+            variant="filled"
+            size="md"
+          ></preferred-button>
+          <span id="pref-resolved-label" style="font-size: 0.8125rem; color: var(--muted); font-family: 'JetBrains Mono', monospace"></span>
         </div>
       </div>
     </section>
@@ -1320,9 +1363,11 @@ app.use(AgentButtonsPlugin);
   </div>
 
   <!-- Pin versions = predictable Hermes palette. Hermes BEFORE claw: shared <hermes-button> tag. -->
-  <script src="https://unpkg.com/claudebuttons@1.2.4/dist/index.global.js"></script>
-  <script src="https://unpkg.com/hermesbuttons@1.1.1/dist/index.global.js"></script>
-  <script src="https://unpkg.com/clawbuttons@1.0.2/dist/index.global.js"></script>
+  <script src="https://unpkg.com/claudebuttons@1.2.5/dist/index.global.js"></script>
+  <script src="https://unpkg.com/hermesbuttons@1.1.2/dist/index.global.js"></script>
+  <script src="https://unpkg.com/clawbuttons@1.0.4/dist/index.global.js"></script>
+  <!-- preferred-button + preference helpers (safe second registration for other tags) -->
+  <script src="https://unpkg.com/agentbuttons@1.1.0/dist/index.global.js"></script>
 
   <script>
     (function () {
@@ -1412,7 +1457,39 @@ app.use(AgentButtonsPlugin);
     })();
 
     (function () {
-      var buttons = document.querySelectorAll('.tab-btn');
+      var COOKIE = 'agentpreferences';
+      var sim = document.getElementById('pref-cookie-sim');
+      if (sim) {
+        sim.addEventListener('click', function (ev) {
+          var t = ev.target;
+          if (!t || !t.getAttribute || !t.getAttribute('data-pref')) return;
+          var pref = t.getAttribute('data-pref');
+          var expires = new Date();
+          expires.setFullYear(expires.getFullYear() + 1);
+          if (pref === 'clear') {
+            document.cookie = COOKIE + '=; Path=/; SameSite=Lax; Expires=Thu, 01 Jan 1970 00:00:00 GMT';
+          } else {
+            var json = JSON.stringify({ order: [pref] });
+            document.cookie = COOKIE + '=' + encodeURIComponent(json) + '; Path=/; SameSite=Lax; Expires=' + expires.toUTCString();
+          }
+          alert('Cookie updated. Reload the page to refresh preferred-button.');
+        });
+      }
+      var demo = document.getElementById('preferred-demo');
+      var label = document.getElementById('pref-resolved-label');
+      if (demo && label) {
+        function syncLabel() {
+          label.textContent = demo.getAttribute('data-resolved-agent')
+            ? 'data-resolved-agent="' + demo.getAttribute('data-resolved-agent') + '"'
+            : '';
+        }
+        syncLabel();
+        new MutationObserver(syncLabel).observe(demo, { attributes: true, attributeFilter: ['data-resolved-agent'] });
+      }
+    })();
+
+    (function () {
+      var buttons = document.querySelectorAll('.tab-list .tab-btn');
       var panels = {
         html: document.getElementById('panel-html'),
         react: document.getElementById('panel-react'),

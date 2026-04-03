@@ -4,6 +4,8 @@
 
 Drop-in **“Run on …”** buttons for Claude Code, Cowork, Hermes, OpenClaw, and the rest of the harness ecosystem. Framework-agnostic Web Components, optional React and Vue integrations, and a single entry point for your site or app.
 
+**Shared preferences:** [claudebuttons](https://www.npmjs.com/package/claudebuttons), [hermesbuttons](https://www.npmjs.com/package/hermesbuttons), and [clawbuttons](https://www.npmjs.com/package/clawbuttons) each set an `agentpreferences` cookie (same origin) when a visitor copies a command. **`agentbuttons`** exposes `<preferred-button>` and **`PreferredButton`** (React) to render **one** button for your `command`, picking the agent the user has used most recently when that agent is listed in your `agents` attribute; if the cookie is missing, order falls back to your list.
+
 <p align="center">
   <img src="https://img.shields.io/npm/v/agentbuttons?color=%230EA5E9&label=npm" alt="npm version">
   <img src="https://img.shields.io/npm/l/agentbuttons?color=%230EA5E9" alt="license">
@@ -26,8 +28,35 @@ Drop-in **“Run on …”** buttons for Claude Code, Cowork, Hermes, OpenClaw, 
 | ZeroClaw | `<zeroclaw-button>` | `cb-` |
 | OpenHarness | `<openharness-button>` | `cb-` |
 | ClaudeClaw | `<claudeclaw-button>` | `cb-` |
+| **Preferred (smart CTA)** | `<preferred-button>` | _(delegates to the chosen agent’s events)_ |
 
 When you import the full package, `<hermes-button>` is the **Hermes Agent** control (`hb-*` events). The OpenClaw-style harness that also targets Hermes is available in React as **`ClawHermesButton`** (see [Framework integration](#framework-integration)).
+
+---
+
+## Preferred agent (`agentpreferences` cookie)
+
+On **the same origin**, any copy action from a family button updates the `agentpreferences` cookie (`{ "order": ["hermes", "claude-code", ...] }`, most recent first). Use **`preferred-button`** (or **`PreferredButton`** in React) to show a single CTA:
+
+- Set **`agents`** to a comma-separated list of agent ids in **your** default priority order, e.g. `claude-code,hermes,openclaw`.
+- The component picks the **first** id in the cookie’s `order` that also appears in `agents`; if none match, it uses the **first** id in `agents`.
+- Forward the usual attributes (`command`, `skill-url`, `theme`, `variant`, `size`, `shape`, `popup`, …) from `preferred-button` onto the rendered child.
+
+```html
+<script type="module">
+  import 'agentbuttons';
+</script>
+
+<preferred-button
+  agents="claude-code,hermes,openclaw"
+  command="/ship the analytics dashboard"
+  skill-url="https://example.com/skill.zip"
+  theme="branded"
+  variant="filled"
+></preferred-button>
+```
+
+The host exposes **`data-resolved-agent`** with the winning id (for styling or analytics). You can read or adjust preferences in JS with **`readAgentPreferences`**, **`writeAgentPreferences`**, and **`pickPreferredAgentId`** from `agentbuttons`.
 
 ---
 
@@ -96,11 +125,18 @@ import {
   ZeroClawButton,
   OpenHarnessButton,
   ClaudeClawButton,
+  PreferredButton,
 } from 'agentbuttons/react';
 
 function App() {
   return (
     <>
+      <PreferredButton
+        agents="claude-code,hermes,openclaw"
+        command="/my-skill"
+        skillUrl="https://example.com/skill.zip"
+        theme="branded"
+      />
       <ClaudeCodeButton command="/my-skill" theme="branded" onCopy={(cmd) => console.log(cmd)} />
       <HermesButton command="/weekly-standup" theme="branded" onHbCopy={(e) => console.log(e.detail.command)} />
       <OpenClawButton command="Deploy the app" theme="branded" />
@@ -125,6 +161,12 @@ app.mount('#app');
 
 ```vue
 <template>
+  <preferred-button
+    agents="claude-code,hermes,openclaw"
+    command="/my-skill"
+    skill-url="https://example.com/skill.zip"
+    theme="branded"
+  />
   <claude-code-button command="/my-skill" theme="branded" @cb-copy="onCopy" />
   <hermes-button command="/standup" theme="branded" @hb-copy="onHermesCopy" />
   <openclaw-button command="/deploy" theme="branded" @cb-copy="onCopy" />

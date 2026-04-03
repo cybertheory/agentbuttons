@@ -19,7 +19,7 @@ export default defineConfig([
     sourcemap: true,
   },
   {
-    entry: ['src/react.ts'],
+    entry: ['src/react.tsx'],
     format: ['esm', 'cjs'],
     dts: true,
     sourcemap: true,

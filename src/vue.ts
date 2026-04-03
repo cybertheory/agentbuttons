@@ -19,6 +19,7 @@ const ALL_CUSTOM_TAGS = [
   'openharness-button',
   'claudeclaw-button',
   'claw-popup-dialog',
+  'preferred-button',
 ];
 
 /**

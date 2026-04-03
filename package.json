@@ -1,6 +1,6 @@
 {
   "name": "agentbuttons",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Drop-in buttons for every AI coding agent — Claude Code, Hermes, OpenClaw, IronClaw, and more. One import, every agent.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -55,9 +55,9 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "claudebuttons": "^1.2.4",
-    "clawbuttons": "^1.0.2",
-    "hermesbuttons": "^1.1.0"
+    "claudebuttons": "^1.2.5",
+    "clawbuttons": "^1.0.4",
+    "hermesbuttons": "^1.1.2"
   },
   "devDependencies": {
     "@types/react": "^19.2.14",

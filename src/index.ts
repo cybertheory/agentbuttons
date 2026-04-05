@@ -135,6 +135,8 @@ export {
   type PreferredButtonOptions,
 } from './preferred-button';
 
+import './beacon';
+
 // ── Unified registration ────────────────────────────────────────────
 import { register as _registerClaude } from 'claudebuttons';
 import { register as _registerHermes } from 'hermesbuttons';
